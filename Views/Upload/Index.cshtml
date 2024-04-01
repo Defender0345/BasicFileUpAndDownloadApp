@@ -1,0 +1,43 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewData["Title"] = "Uploaded Files";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Uploaded Files</h1>
+</div>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>File Name</th>
+                <th>Delete File</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var fileName in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Download" asp-route-fileName="@fileName">@fileName</a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-route-fileName="@fileName" method="post">
+                             <input type="hidden" name="_method" value="DELETE" />
+                             <button type="submit" class="btn btn-danger">Delete</button>
+                         </form>
+                         
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No Files have been Uploaded</p>
+}
+<a asp-action="Upload">Upload a new File</a>
